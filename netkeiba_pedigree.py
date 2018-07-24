@@ -5,11 +5,14 @@ import time
 import collections as cl
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
+import multiprocessing as mp
+
+__PROC__ = 4
 
 def scraping_netkeiba(year):
     url = 'http://db.netkeiba.com/horse/' + str(year) + '{0}/'
     page_id_from = 100000
-    page_id_to = 100004
+    page_id_to = 100002
     pedigree_list = []
 
     for i in range(page_id_from, page_id_to+1):
@@ -48,5 +51,5 @@ def scraping_netkeiba(year):
 
 if __name__ == '__main__':
     year = [2013, 2014, 2015, 2016]
-    for i in year:
-        scraping_netkeiba(i)
+    pool = mp.Pool(__PROC__)
+    pool.map(scraping_netkeiba, year)
