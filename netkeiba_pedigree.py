@@ -43,8 +43,8 @@ def scraping_netkeiba(year):
                 continue
         else:
             continue
-    horse_json = json.dumps(pedigree_list, ensure_ascii=False, indent=2)
-    print(horse_json)
+    rslt_file = open('data/pedigree_' + str(year) + '.txt', 'w')
+    json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
     year = 2016
