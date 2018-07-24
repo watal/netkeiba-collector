@@ -47,5 +47,6 @@ def scraping_netkeiba(year):
     json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
-    year = 2016
-    scraping_netkeiba(year)
+    year = [2013, 2014, 2015, 2016]
+    for i in year:
+        scraping_netkeiba(i)
