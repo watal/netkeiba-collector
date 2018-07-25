@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 
+import collections as cl
 import json
 import time
-import collections as cl
+import multiprocessing as mp
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
-import multiprocessing as mp
 
+# 4プロセスで実行
 __PROC__ = 4
 
 def scraping_netkeiba(year):
@@ -30,12 +31,13 @@ def scraping_netkeiba(year):
             horse_name = div.h1.text
             if horse_name != None:
 
+                # 各要素の抜き出し
                 birthday = table.find_all('td')[0].text.strip('\n')
                 fathor = dl.find_all('td', class_='b_ml')[0].text.strip('\n')
                 mother = dl.find_all('td', class_='b_fml')[1].text.strip('\n')
                 b_sire = dl.find_all('td', class_='b_ml')[2].text.strip('\n')
 
-                tmp_list = [{"page_id":i}]                          # ページID
+                tmp_list = [{"page_id":year + i}]                   # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
                 tmp_list.append({"birthday":birthday.strip()})      # 生年月日
                 tmp_list.append({"father":fathor.strip()})          # 父
@@ -49,7 +51,10 @@ def scraping_netkeiba(year):
     rslt_file = open('data/pedigree_' + str(year) + '.txt', 'w')
     json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
-if __name__ == '__main__':
+def main:
     year = [2013, 2014, 2015, 2016]
     pool = mp.Pool(__PROC__)
     pool.map(scraping_netkeiba, year)
+
+if __name__ == '__main__':
+    main()
