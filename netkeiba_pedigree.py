@@ -11,7 +11,10 @@ from urllib.request import urlopen
 __PROC__ = 4
 
 def scraping_netkeiba(year):
+    # netkeibaのURL
     url = 'http://db.netkeiba.com/horse/' + str(year) + '{0}/'
+
+    # 開始ページと終了ページIDを指定
     page_id_from = 100000
     page_id_to = 100002
     pedigree_list = []
@@ -37,7 +40,7 @@ def scraping_netkeiba(year):
                 mother = dl.find_all('td', class_='b_fml')[1].text.strip('\n')
                 b_sire = dl.find_all('td', class_='b_ml')[2].text.strip('\n')
 
-                tmp_list = [{"page_id":str(year) + str(i)}]                   # ページID
+                tmp_list = [{"page_id":str(year) + str(i)}]         # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
                 tmp_list.append({"birthday":birthday.strip()})      # 生年月日
                 tmp_list.append({"father":fathor.strip()})          # 父
@@ -48,10 +51,13 @@ def scraping_netkeiba(year):
                 continue
         else:
             continue
+
+    # ファイル出力
     rslt_file = open('data/pedigree_' + str(year) + '.json', 'w')
     json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
 def main():
+    # 対象年を指定
     year = [2013, 2014, 2015, 2016]
     pool = mp.Pool(__PROC__)
     pool.map(scraping_netkeiba, year)
