@@ -51,7 +51,7 @@ def scraping_netkeiba(year):
     rslt_file = open('data/pedigree_' + str(year) + '.json', 'w')
     json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
-def main:
+def main():
     year = [2013, 2014, 2015, 2016]
     pool = mp.Pool(__PROC__)
     pool.map(scraping_netkeiba, year)
