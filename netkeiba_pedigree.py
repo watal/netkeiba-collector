@@ -37,7 +37,7 @@ def scraping_netkeiba(year):
                 mother = dl.find_all('td', class_='b_fml')[1].text.strip('\n')
                 b_sire = dl.find_all('td', class_='b_ml')[2].text.strip('\n')
 
-                tmp_list = [{"page_id":year + i}]                   # ページID
+                tmp_list = [{"page_id":str(year) + str(i)}]                   # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
                 tmp_list.append({"birthday":birthday.strip()})      # 生年月日
                 tmp_list.append({"father":fathor.strip()})          # 父
