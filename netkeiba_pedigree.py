@@ -48,7 +48,7 @@ def scraping_netkeiba(year):
                 continue
         else:
             continue
-    rslt_file = open('data/pedigree_' + str(year) + '.txt', 'w')
+    rslt_file = open('data/pedigree_' + str(year) + '.json', 'w')
     json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
 def main:
