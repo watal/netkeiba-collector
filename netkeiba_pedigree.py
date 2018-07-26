@@ -22,6 +22,7 @@ def scraping_netkeiba(year):
     for i in range(page_id_from, page_id_to+1):
         # ページ情報を取得
         page = bs(urlopen(url.format(i)), 'lxml')
+        result_tr_arr = page.select('table.db_h_race_results > tbody > tr')
 
         # 1秒に1回実行
         time.sleep(1)
@@ -31,26 +32,36 @@ def scraping_netkeiba(year):
 
         # コンテンツがあった場合，配列に追加
         if div != None:
+            result_list = []
             horse_name = div.h1.text
             if horse_name != None:
-
                 # 各要素の抜き出し
                 birthday = table.find_all('td')[0].text.strip('\n')
+                money = table.find_all('td')[6].text.strip('\n')
                 fathor = dl.find_all('td', class_='b_ml')[0].text.strip('\n')
                 mother = dl.find_all('td', class_='b_fml')[1].text.strip('\n')
                 b_sire = dl.find_all('td', class_='b_ml')[2].text.strip('\n')
 
+                for tr in result_tr_arr:
+                    tds = tr.find_all('td')
+                    if len(tds) != 0:
+                        raceymd = tds[0].a.text
+                        racename = tds[4].a.text
+                        race_result = tds[11].text
+                        result_list.append({"raceymd":raceymd.strip()})     # レース日付
+                        result_list.append({"racerace":racename.strip()})   # レース名
+                        result_list.append({"raceresult":race_result})      # レース結果
+
+
                 tmp_list = [{"page_id":str(year) + str(i)}]         # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
                 tmp_list.append({"birthday":birthday.strip()})      # 生年月日
+                tmp_list.append({"money":money.strip()})            # 獲得賞金
                 tmp_list.append({"father":fathor.strip()})          # 父
                 tmp_list.append({"mother":mother.strip()})          # 母
                 tmp_list.append({"b_sire":b_sire.strip()})          # 母父
+                tmp_list.append(result_list)                        # 戦績
                 pedigree_list.append(tmp_list)
-            else:
-                continue
-        else:
-            continue
 
     # ファイル出力
     rslt_file = open('data/pedigree_' + str(year) + '.json', 'w')
