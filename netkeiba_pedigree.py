@@ -48,10 +48,9 @@ def scraping_netkeiba(year):
                         raceymd = tds[0].a.text
                         racename = tds[4].a.text
                         race_result = tds[11].text
-                        result_list.append({"raceymd":raceymd.strip()})     # レース日付
-                        result_list.append({"racerace":racename.strip()})   # レース名
-                        result_list.append({"raceresult":race_result})      # レース結果
-
+                        result_list.append({"race_ymd":raceymd.strip()})    # レース日付
+                        result_list.append({"race_name":racename.strip()})  # レース名
+                        result_list.append({"race_result":race_result})     # レース結果
 
                 tmp_list = [{"page_id":str(year) + str(i)}]         # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
