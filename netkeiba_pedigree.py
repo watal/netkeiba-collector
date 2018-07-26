@@ -45,11 +45,11 @@ def scraping_netkeiba(year):
                 for tr in result_tr_arr:
                     tds = tr.find_all('td')
                     if len(tds) != 0:
-                        raceymd = tds[0].a.text
-                        racename = tds[4].a.text
+                        race_ymd = tds[0].a.text
+                        race_name = tds[4].a.text
                         race_result = tds[11].text
-                        result_list.append({"race_ymd":raceymd.strip()})    # レース日付
-                        result_list.append({"race_name":racename.strip()})  # レース名
+                        result_list.append({"race_ymd":race_ymd.strip()})   # レース日付
+                        result_list.append({"race_name":race_name.strip()}) # レース名
                         result_list.append({"race_result":race_result})     # レース結果
 
                 tmp_list = [{"page_id":str(year) + str(i)}]         # ページID
