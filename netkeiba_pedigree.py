@@ -49,7 +49,7 @@ def scraping_netkeiba(year):
                         race_place = tds[1].a.text
                         race_name = tds[4].a.text
                         race_result = tds[11].text
-                        race_jockey = tds[12].text
+                        race_jockey = tds[12].text.strip('\n')
                         race_conditions = tds[14].text
                         result_list.append({"raceymd":race_ymd.strip()})        # レース日付
                         result_list.append({"raceplace":race_place.strip()})    # 開催場所
