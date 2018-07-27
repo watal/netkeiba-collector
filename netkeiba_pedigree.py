@@ -52,11 +52,11 @@ def scraping_netkeiba(year):
                         race_jockey = tds[12].text.strip('\n')
                         race_conditions = tds[14].text
                         result_list.append({"race_ymd":race_ymd.strip()})       # レース日付
-                        result_list.append({"race_place":race_place.strip()})    # 開催場所
+                        result_list.append({"race_place":race_place.strip()})   # 開催場所
                         result_list.append({"race_name":race_name.strip()})     # レース名
                         result_list.append({"race_result":race_result})         # レース結果
-                        result_list.append({"race_jockey":race_jockey})          # 騎手
-                        result_list.append({"race_conditions":race_conditions})  # レース条件
+                        result_list.append({"race_jockey":race_jockey})         # 騎手
+                        result_list.append({"race_conditions":race_conditions}) # レース条件
 
                 tmp_list = [{"page_id":str(year) + str(i)}]         # ページID
                 tmp_list.append({"name":horse_name.strip()})        # 馬名
