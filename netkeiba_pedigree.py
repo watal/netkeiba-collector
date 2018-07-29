@@ -69,8 +69,8 @@ def scraping_netkeiba(year):
                 pedigree_list.append(tmp_list)
 
     # ファイル出力
-    rslt_file = open('data/pedigree_' + str(year) + '.json', 'w')
-    json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
+    with open('data/pedigree_' + str(year) + '.json', 'w') as rslt_file:
+        json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
 
 def main():
     # 対象年を指定
