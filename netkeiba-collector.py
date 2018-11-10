@@ -18,7 +18,7 @@ def scraping_netkeiba(year):
     # 開始ページと終了ページIDを指定
     page_id_from = 100000
     page_id_to = 100002
-    pedigree_list = []
+    netkeiba_list = []
 
     for i in range(page_id_from, page_id_to+1):
         # ページ情報を取得
@@ -73,11 +73,11 @@ def scraping_netkeiba(year):
                 tmp_list.append({"mother": mother.strip()})         # 母
                 tmp_list.append({"b_sire": b_sire.strip()})         # 母父
                 tmp_list.append(result_list)                        # 戦績
-                pedigree_list.append(tmp_list)
+                netkeiba_list.append(tmp_list)
 
     # ファイル出力
     with open('data/netkeiba_' + str(year) + '.json', 'w') as rslt_file:
-        json.dump(pedigree_list, rslt_file, ensure_ascii=False, indent=2)
+        json.dump(netkeiba_list, rslt_file, ensure_ascii=False, indent=2)
 
 
 def main():
