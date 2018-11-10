@@ -1,6 +1,8 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 import collections as cl
+import configparser
 import json
 import time
 import multiprocessing as mp
@@ -10,14 +12,19 @@ from urllib.request import urlopen
 # 4プロセスで実行
 __PROC__ = 4
 
+# 設定ファイル読み込み
+config = configparser.ConfigParser()
+config.read('nc.conf')
+
 
 def scraping_netkeiba(year):
     # netkeibaのURL
     url = 'http://db.netkeiba.com/horse/' + str(year) + '{0}/'
 
     # 開始ページと終了ページIDを指定
-    page_id_from = 100000
-    page_id_to = 100002
+    page_id_from = config.getint('settings', 'PageIdFrom')
+    page_id_to = config.getint('settings', 'PageIdTo')
+
     netkeiba_list = []
 
     for i in range(page_id_from, page_id_to+1):
@@ -81,10 +88,11 @@ def scraping_netkeiba(year):
 
 
 def main():
+
     # 対象年を指定
-    year = [2013, 2014, 2015, 2016]
+    years = json.loads(config['settings']['Years'])
     pool = mp.Pool(__PROC__)
-    pool.map(scraping_netkeiba, year)
+    pool.map(scraping_netkeiba, years)
 
 
 if __name__ == '__main__':
