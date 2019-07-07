@@ -147,6 +147,15 @@ def scraping_netkeiba(year):
     with open('data/netkeiba_' + str(year) + '.json', 'w') as rslt_file:
         json.dump(netkeiba_list, rslt_file, ensure_ascii=False, indent=2)
 
+    # csv
+    with open('data/netkeiba_' + str(year) + '.csv', 'w', newline='') as rslt_file:
+        fieldnames = netkeiba_list[0].keys()
+        fieldnames = sorted(fieldnames)
+        writer = csv.DictWriter(rslt_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for w in netkeiba_list:
+            writer.writerow(w)
+
 
 def main():
 
